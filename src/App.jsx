@@ -8,6 +8,8 @@ function App() {
 
   const [isloggedin,setIsloggedIn]=useState(false);
 
+  const [userCount,setuserCount]=useState();
+
   function onLogin(){
     setIsloggedIn(true);
   }
@@ -19,7 +21,7 @@ function App() {
   return (
     <>
     {
-      (isloggedin)? <Dashboard logout={onLogout}/> : <Login login={onLogin}/>
+      (isloggedin)? <Dashboard userCount={userCount} setuserCount={setuserCount} logout={onLogout}/> : <Login userCount={userCount} setuserCount={setuserCount} login={onLogin}/>
     }
     </>
   )

@@ -12,6 +12,7 @@ const Login = ({login}) => {
     }
 
   return (
+    <>
     <Form className='login'>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
@@ -32,6 +33,7 @@ const Login = ({login}) => {
         Submit
       </Button>
     </Form>
+    </>
   )
 }
 

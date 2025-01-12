@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-function NavbarComp({logouts}) {
+function NavbarComp({logouts,count}) {
 
     function onLogoutClick(e){
         e.preventDefault();
@@ -18,6 +18,7 @@ function NavbarComp({logouts}) {
             <Nav.Link href="#features">Features</Nav.Link>
             <Nav.Link href="#pricing">Pricing</Nav.Link>
           </Nav>
+          <button className="bg-blue-500 mr-7 text-white px-3 py-1 rounded text-sm">{count}</button>
           <button onClick={onLogoutClick} className="bg-blue-500 text-white px-3 py-1 rounded text-sm">Logout</button>
         </Container>
       </Navbar>
