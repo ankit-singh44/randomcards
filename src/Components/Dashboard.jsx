@@ -1,12 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import User from '../User/User'
 import userData from './UserData'
 import NavbarComp from './Navbar/Navbar'
+import Loader from './Spinner/Loader'
 
-
+var sabkadata=null;
 const  Dashboard = ({logout}) => {
 
-  const [user,setUser]=useState(userData);
+  const [user,setUser]=useState([]);
+  const[isLoading,setisLoading]=useState(true);
+  const[isError,setisError]=useState(false);
+
+
+
+  useEffect(() => {
+    console.log("Making an API call");
+    
+    fetch('https://dummyjson.com/users')
+    .then(res => res.json())
+    .then((res)=>{
+      setisLoading(false);
+      setUser(res.users); 
+      sabkadata=res.users;   
+    })
+    .catch((error)=>{
+      setisLoading(false);
+      setisError(true);
+    })
+  },[])
+  
 
   // Building filter functionality and defining state for serach bar
   const [searchValue,setsearchValue]=useState("");
@@ -16,7 +38,7 @@ const  Dashboard = ({logout}) => {
     setsearchValue(updatedVal);
 
     // get store this data to a variable so that we can pass this var to another comp as prop
-    const updatedUser=userData.filter((user)=>{
+    const updatedUser=sabkadata.filter((user)=>{
       const fullname=user.firstName+" "+user.lastName;
 
       return fullname.toLowerCase().startsWith(updatedVal.toLowerCase());
@@ -54,7 +76,8 @@ const  Dashboard = ({logout}) => {
       </div>
 
 
-      <div className='flex flex-wrap justify-center align-center'>
+      {
+        (isLoading) ? <Loader/> : <div className='flex flex-wrap justify-center align-center'>
         {
           user.map((users)=>{
             return (
@@ -62,7 +85,13 @@ const  Dashboard = ({logout}) => {
             )
           })
         }
-      </div>      
+      </div>
+      }   
+
+      {
+        (isError) && 
+        <h2 className='flex item-center justify-center'>Unable to fetech the data from server</h2>
+      }         
     </div>
   )
 }
